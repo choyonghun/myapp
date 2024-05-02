@@ -10,9 +10,10 @@ public interface MemberService {
   List<Member> list(int pageNo, int pageSize);
 
   Member get(int no);
-  Member get(String email);
 
   Member get(String email, String password);
+
+  Member get(String email);
 
   int update(Member member);
 

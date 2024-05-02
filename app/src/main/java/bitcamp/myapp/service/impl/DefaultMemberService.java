@@ -34,13 +34,13 @@ public class DefaultMemberService implements MemberService {
   }
 
   @Override
-  public Member get(String email) {
-    return memberDao.findByEmail(email);
+  public Member get(String email, String password) {
+    return memberDao.findByEmailAndPassword(email, password);
   }
 
   @Override
-  public Member get(String email, String password) {
-    return memberDao.findByEmailAndPassword(email, password);
+  public Member get(String email) {
+    return memberDao.findByEmail(email);
   }
 
   @Override

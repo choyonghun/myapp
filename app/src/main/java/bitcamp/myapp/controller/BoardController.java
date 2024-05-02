@@ -1,11 +1,13 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.annotation.LoginUser;
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.StorageService;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -43,12 +45,8 @@ public class BoardController {
   public String add(
       Board board,
       MultipartFile[] attachedFiles,
-      HttpSession session) throws Exception {
+      @LoginUser Member loginUser) throws Exception {
 
-    Member loginUser = (Member) session.getAttribute("loginUser");
-    if (loginUser == null) {
-      throw new Exception("로그인하시기 바랍니다!");
-    }
     board.setWriter(loginUser);
 
     ArrayList<AttachedFile> files = new ArrayList<>();
@@ -116,12 +114,7 @@ public class BoardController {
   public String update(
       Board board,
       MultipartFile[] attachedFiles,
-      HttpSession session) throws Exception {
-
-    Member loginUser = (Member) session.getAttribute("loginUser");
-    if (loginUser == null) {
-      throw new Exception("로그인하시기 바랍니다!");
-    }
+      @LoginUser Member loginUser) throws Exception {
 
     Board old = boardService.get(board.getNo());
     if (old == null) {
@@ -152,12 +145,10 @@ public class BoardController {
   }
 
   @GetMapping("delete")
-  public String delete(int category, int no, HttpSession session) throws Exception {
-
-    Member loginUser = (Member) session.getAttribute("loginUser");
-    if (loginUser == null) {
-      throw new Exception("로그인하시기 바랍니다!");
-    }
+  public String delete(
+      int category,
+      int no,
+      @LoginUser Member loginUser) throws Exception {
 
     Board board = boardService.get(no);
     if (board == null) {
@@ -179,12 +170,10 @@ public class BoardController {
   }
 
   @GetMapping("file/delete")
-  public String fileDelete(int category, int no, HttpSession session) throws Exception {
-
-    Member loginUser = (Member) session.getAttribute("loginUser");
-    if (loginUser == null) {
-      throw new Exception("로그인하시기 바랍니다!");
-    }
+  public String fileDelete(
+      int category,
+      int no,
+      @LoginUser Member loginUser) throws Exception {
 
     AttachedFile file = boardService.getAttachedFile(no);
     if (file == null) {

@@ -112,7 +112,6 @@ public class MemberController implements InitializingBean {
     }
 
     member.setPassword(passwordEncoder.encode(member.getPassword()));
-
     memberService.update(member);
     return "redirect:list";
   }
